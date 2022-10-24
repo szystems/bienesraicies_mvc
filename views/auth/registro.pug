@@ -7,15 +7,21 @@ block  contenido
         br
         p.text-center LLena los campos para registrarte:
 
+        if errores 
+            div(class="max-w-md mx-auto my-10")
+                each error in errores
+                    p.bg-red-600.text-white.uppercase.text-xs.text-center.p-2.mb-1.font-bold= error.msg
+
         div.mt-8.mx-auto.max-w-md
             div.bg-white.py-8.px-4.shadow
-                form.space-y-5
+                form.space-y-5(method="POST" action="/auth/registro" noValidate)
+                    input(type="hidden" name="_csrf" value=csrfToken)
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="nombre") Tu Nombre
-                        input#nombre.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Nombre" type="text" name="nombre")
+                        input#nombre.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Nombre" type="text" name="nombre" value= usuario ? usuario.nombre : '')
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Tu Email
-                        input#email.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Email" type="email" name="email")
+                        input#email.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Email" type="email" name="email" value= usuario ? usuario.email : '')
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Password
                         input#password.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Password" type="password" name="password")
